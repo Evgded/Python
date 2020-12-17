@@ -47,10 +47,13 @@ class Card:
         win = True
 
         for i, e1 in enumerate(self.lst):
+            win = True
             for j, num in enumerate(e1):
-                if num != '--':
+                if str(num).isdigit():
                     win = False
                     break
+            if not win:
+                break
         return win
 
 
@@ -81,6 +84,10 @@ class Game:
     def play(self):
         turn = 1
         while True:
+            system('cls')
+            if self.comp.is_win() and self.me.is_win():
+                print('Ничья!')
+                break
             if self.comp.is_win():
                 print('Вы проиграли компьютеру...')
                 break
@@ -95,7 +102,6 @@ class Game:
             self.comp.cross_out(self.new_barrel)
             if self.me.is_in(self.new_barrel) and last_string == 'y':
                 self.me.cross_out(self.new_barrel)
-                system('cls')
             elif not self.me.is_in(self.new_barrel) and last_string == 'y':
                 print('You wrong and lose!')
                 break
@@ -103,7 +109,6 @@ class Game:
                 print('You wrong and lose!')
                 break
             elif not self.me.is_in(self.new_barrel) and last_string == 'n':
-                system('cls')
                 continue
             else:
                 print('You wrong and lose!')
